@@ -1,17 +1,24 @@
 <!DOCTYPE html>
 <html lang="ar">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>عربة التسوق</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>عربة التسوق</title>
+  <link rel="stylesheet" href="index.css">
 </head>
 <body>
-    <h1>عربة التسوق</h1>
-    <div id="product-list">
-    </div>
-    <div id="cart">
-        <h2>عربتي</h2>
-    </div>
-    <script src="script.js"></script>
+  <h1>عربة التسوق</h1>
+  <div id="product-list"></div>
+  <div id="cart">
+    <h2>عربتي</h2>
+    <div id="cart-items"></div>
+    <p><strong>إجمالي السعر:</strong> <span id="cart-total">0</span></p>
+    <button id="checkout-button">الدفع</button>
+  </div>
+  <script src="script.js"></script>
+  <p>Enter Payment Amount:</p>
+<input type="number" id="payment-amount">
+<button id="pay-button">Pay</button>
+<p>Remaining Balance: <span id="remaining-balance">0</span></p>
 </body>
 </html>

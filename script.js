@@ -1,26 +1,26 @@
 const products = [
-    {
-      name: "Laptop",
-      price: 1200,
-      quantity: 0,
-      productId: 1,
-      image: "https://example.com/laptop.jpg",
-    },
-    {
-      name: "Smartphone",
-      price: 800,
-      quantity: 0,
-      productId: 2,
-      image: "https://example.com/smartphone.jpg",
-    },
-    {
-      name: "Headphones",
-      price: 150,
-      quantity: 0,
-      productId: 3,
-      image: "https://example.com/headphones.jpg",
-    },
-  ];
+  {
+    name: "Laptop",
+    price: 1200,
+    quantity: 0,
+    productId: 1,
+    image: "https://via.placeholder.com/150?text=Laptop",
+  },
+  {
+    name: "Smartphone",
+    price: 800,
+    quantity: 0,
+    productId: 2,
+    image: "https://via.placeholder.com/150?text=Smartphone",
+  },
+  {
+    name: "Headphones",
+    price: 150,
+    quantity: 0,
+    productId: 3,
+    image: "https://via.placeholder.com/150?text=Headphones",
+  },
+];
   
   let cart = [];
   let remainingBalance = 0; // الرصيد المتبقي
@@ -102,4 +102,50 @@ const products = [
     };
     products.push(newProduct);
   }
-  
+
+function displayProducts() {
+  const productList = document.getElementById("product-list");
+  products.forEach(product => {
+    const productCard = document.createElement("div");
+    productCard.className = "product-card";
+    productCard.innerHTML = `
+      <img src="${product.image}" alt="${product.name}">
+      <h3>${product.name}</h3>
+      <p>${formatPrice(product.price, 'USD')}</p>
+      <button onclick="addProductToCart(${product.productId})">Add to Cart</button>
+    `;
+    productList.appendChild(productCard);
+  });
+}
+
+function updateCartUI() {
+  const cartItems = document.getElementById("cart-items");
+  cartItems.innerHTML = "";
+  cart.forEach(item => {
+    const cartItem = document.createElement("div");
+    cartItem.innerHTML = `
+      <p>${item.name} - ${formatPrice(item.price, 'USD')} x ${item.quantity}</p>
+      <button onclick="increaseQuantity(${item.productId})">+</button>
+      <button onclick="decreaseQuantity(${item.productId})">-</button>
+      <button onclick="removeProductFromCart(${item.productId})">Remove</button>
+    `;
+    cartItems.appendChild(cartItem);
+  });
+  document.getElementById("cart-total").innerText = formatPrice(cartTotal(), 'USD');
+}
+
+document.getElementById("checkout-button").addEventListener("click", () => {
+  const total = cartTotal();
+  alert(`Your total is ${formatPrice(total, 'USD')}`);
+  clearCart();
+  updateCartUI();
+});
+
+displayProducts();
+
+document.getElementById("pay-button").addEventListener("click", () => {
+  const paymentAmount = parseFloat(document.getElementById("payment-amount").value);
+  const remaining = pay(paymentAmount);
+  document.getElementById("remaining-balance").innerText = formatPrice(remaining, 'USD');
+  updateCartUI();
+});
